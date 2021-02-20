@@ -13,5 +13,6 @@ WORKDIR /code
 COPY ./ .
 
 # command to run on container start
-#CMD [ "python", "./server.py" ]
-CMD [ "python", "./copys3.py", "kvsource","kvdest","3"]
+# CMD [ "python", "./copys3.py", "kvsource","kvdest","3"]
+ENTRYPOINT [ "python", "./copys3.py" ]
+CMD [ "kvsource","kvdest","3"]
