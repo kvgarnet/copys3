@@ -25,7 +25,7 @@ def main():
     sourcebucket=args.source
     destbucket=args.dest
     #transform to mb from bytes
-    sizemb=args.size
+    sizemb=args.size*1024*1024
     # copyobj_lst=[]
     s3_resource = boto3.resource('s3')
     # source_bucket = s3_resource.Bucket(name='kvsource')
@@ -35,7 +35,7 @@ def main():
         if object.size > sizemb:
             # copyobj_lst.append(object.key)
             print(f"object {object.key} is larger than {sizemb} bytes")
-            print(f"copying object {object.key} to bucket {destbucket}")
+            print(f"copying object {object.key} to bucket {destbucket.name}")
             copy_to_bucket(sourcebucket,destbucket,object.key)
     # print(f"copy object list :{copyobj_lst}")
 if __name__=='__main__':
