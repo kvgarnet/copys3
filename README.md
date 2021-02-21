@@ -51,39 +51,41 @@ Assumptions are that the buckets are in the same region.
 The application is built with AWS python SDK boto3 module, interacting with AWS S3 service
 
 ### Prerequisites
+- A Linux host server for below tools installation
 - [AWS Account](https://aws.amazon.com/free/?nc2=h_ql_pr) - free tier can be utilized for this exercise since all we need are (2) S3 buckets
   - [AWS CLI ](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv1.html)
 - [Docker](https://docs.docker.com/install/)  - Install latest docker for your operating system.
 - [Python](https://www.python.org)  - please use Python 3.6.x or greater if you decide to use Python
-  - [AWS SDK Python boto3](https://aws.amazon.com/sdk-for-python/)
+  - [AWS SDK Python boto3](https://aws.amazon.com/sdk-for-python/) - ensure boto3 installed on host server
+- Create IAM user with AWSS3fullaccess permission. record user's AK/SK credentials
+- Configure AK/SK via 'aws configure' on host server
+- Verify that aws cli tool can work with S3, create S3 buckets as below:
 
-
-
-### Installation
-After above prerequisites tools installed on Linux Servers, please configure docker images as below:
- 
-1. Create IAM user with AWSS3fullaccess permission. remember the AK/SK credentials
-2. Configure AK/SK via running 'aws configure' 
-3. Verify that aws-cli tool can work with S3, create S3 buckets as below:
-
+**Note:replace bucket names with your own**
 ```sh
 aws s3 mb s3://kvsource
 aws s3 mb s3://kvdest
 aws s3 ls
 ```
-4. Clone the repo
+
+
+
+### Installation
+After above prerequisites tools installed on Linux Servers, please configure docker images as below:
+
+1. Clone the repo
    ```sh
-   https://github.com/kvgarnet/copys3.git
+   git clone https://github.com/kvgarnet/copys3.git
    ```
-5. Build Docker Image
+2. Build Docker Image
    ```sh
    make build 
    ```
-6. Generate files with different sizes to source bucket via aws cli
+3. Generate files with different sizes to source bucket via aws cli
 ```
 make 
 ```
-7. Upload files with different sizes to source bucket via aws cli
+4. Upload files with different sizes to source bucket via aws cli
 ```
 make upload 
 #by default it will use my account's source bucket 'kvsource', can also set your bucket name with:
