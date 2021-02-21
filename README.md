@@ -78,25 +78,31 @@ aws s3 ls
    ```sh
    docker build -t myimage . 
    ```
+6. upload files with different sizes to source bucket via aws cli
+</p>
+```
+aws s3 cp 1m s3://kvsource/
+aws s3 cp 1.5m s3://kvsource/
+aws s3 cp 2m s3://kvsource/
+aws s3 cp 3m s3://kvsource/
+aws s3 cp 4m s3://kvsource/
+```
 
 
-
-<!-- USAGE EXAMPLES -->
 ## Usage
 ### Test apllication locally
 1. Before running the docker container, you can also run python application locally
-
 ```
 copys3.py <sourcebucket> <destinationbucket> <threshold>
 # in my AWS test account, example as
 copys3.py kvsource kvdest 3
 ```
-2. Verify 
+2. Verify to see files were copied to kvdest bucket:
 ```sh
  aws s3 ls s3://kvdest
 ```
 
-Run the docker application to copy
+### Run the docker application
 
 1. Run the application:
 <br/>
