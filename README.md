@@ -14,11 +14,8 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
+      <a href="#what-is-copys3">What is CopyS3</a>
+     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
@@ -59,16 +56,12 @@ The application is built with AWS python SDK boto3 module, interacting with AWS 
   - [AWS SDK Python boto3](https://aws.amazon.com/sdk-for-python/) - ensure boto3 installed on host server
 - Create IAM user with AWSS3fullaccess permission. record user's AK/SK credentials
 - Configure AK/SK via 'aws configure' on host server
-- Verify that aws cli tool can work with S3, create S3 buckets as below:
+- Verify that user has permission  with S3, create S3 buckets via aws cli 
 
-**Note:replace bucket names with your own**
-```sh
-aws s3 mb s3://kvsource
-aws s3 mb s3://kvdest
+    **Note:replace bucket names with your own**
+```
 aws s3 ls
 ```
-
-
 
 ### Installation
 After above prerequisites tools installed on Linux Servers, please configure docker images as below:
@@ -77,20 +70,27 @@ After above prerequisites tools installed on Linux Servers, please configure doc
    ```sh
    git clone https://github.com/kvgarnet/copys3.git
    ```
-2. Build Docker Image
+2. create S3 buckets
+```
+make mb
+#Note:replace bucket names with your own
+make mb source=<your_bucket1> dest=<your_bucket2>
+```
+2. Generate files with different sizes to source bucket
+```
+#we will generate 1mb 1.5mb 2mb files for testing
+make s3files
+```
+3. Upload test files with different sizes to source bucket via aws cli
+```
+make upload 
+#by default it will upload to bucket 'kvsource', can also set your bucket name with:
+make upload  source=<your_bucket>
+```
+4. Build Docker Image
    ```sh
    make build 
    ```
-3. Generate files with different sizes to source bucket via aws cli
-```
-make 
-```
-4. Upload files with different sizes to source bucket via aws cli
-```
-make upload 
-#by default it will use my account's source bucket 'kvsource', can also set your bucket name with:
-make upload  source=<your_bucket>
-```
 
 ## Usage
 ### Test apllication locally
@@ -108,15 +108,17 @@ copys3.py kvsource kvdest 3
 ### Run the docker application
 
 1. Run the application:
-<br/>
-1.1  use the 3MB as default threshold,copy files from 'kvsource' to 'kvdest'
-   ```sh
+
+    - use the 3MB as default threshold,copy files from 'kvsource' to 'kvdest'
+```sh
   make run
 ```
-<br/>
-1.2 use the 1MB as size threshold,copy files from 'frombucket' to ' tobucket'
+
+    - customize the bucket and size
+
+    for example, use the 1MB as size threshold,copy files from 'frombucket' to 'tobucket'
 ```sh
-make run source=kvsource dest=kvdest size=1
+make run source=frombucket dest=tobucket size=1
 ```
 
 
