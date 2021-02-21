@@ -65,7 +65,7 @@ After above prerequisites tools installed on Linux Servers, please configure doc
 1. Create IAM user with AWSS3fullaccess permission. remember the AK/SK credentials
 2. Configure AK/SK via running 'aws configure' 
 3. Verify that aws-cli tool can work with S3, create S3 buckets as below:
-<p>Note:replace bucket names with your own</p>
+
 ```sh
 aws s3 mb s3://kvsource
 aws s3 mb s3://kvdest
