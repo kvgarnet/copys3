@@ -1,6 +1,9 @@
+
+
+
 <p align="center">
   
-  <h3 align="center">Copys3</h3>
+  <h3 align="center">CopyS3</h3>
 
   </p>
 
@@ -36,60 +39,76 @@
 
 <!-- ABOUT THE PROJECT -->
 ## What is CopyS3
-It is a small containerized Python application using Docker. 
+It is a Docker containerized Python application. 
 When given the names of two S3 buckets (source, destination) and a threshold size (in MB), application will copy
 all files greater than the specified threshold size from the source bucket to the destination bucket.
 Assumptions are that the buckets are in the same region.
 
 
-
-### Built With
-
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
-* [Laravel](https://laravel.com)
-
-
-
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+The application is built with AWS python SDK boto3 module, interacting with AWS S3 service
 
 ### Prerequisites
+- [AWS Account](https://aws.amazon.com/free/?nc2=h_ql_pr) - free tier can be utilized for this exercise since all we need are (2) S3 buckets
+  - [AWS CLI ](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv1.html)
+- [Docker](https://docs.docker.com/install/)  - Install latest docker for your operating system.
+- [Python](https://www.python.org)  - please use Python 3.6.x or greater if you decide to use Python
+  - [AWS SDK Python boto3](https://aws.amazon.com/sdk-for-python/)
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+
 
 ### Installation
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+After above prerequisites tools installed on Linux Servers, please configure docker images as below:
+ 
+1. Create IAM user with AWSS3fullaccess permission. remember the AK/SK credentials
+2. configure AK/SK via running 'aws configure' 
+3. verify that aws-cli tool can work with S3, create S3 buckets as below:
+```sh
+aws s3 mb s3://kvsource
+aws s3 mb s3://kvdest
+aws s3 ls
+```
+4. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   https://github.com/kvgarnet/copys3.git
    ```
-3. Install NPM packages
+5. Build Docker Image
    ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```JS
-   const API_KEY = 'ENTER YOUR API';
+   docker build -t myimage . 
    ```
 
 
 
 <!-- USAGE EXAMPLES -->
 ## Usage
+### Test apllication locally
+1. Before running the docker container, you can also run python application locally
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+```
+copys3.py <sourcebucket> <destinationbucket> <threshold>
+# in my AWS test account, example as
+copys3.py kvsource kvdest 3
+```
+2. Verify 
+```sh
+ aws s3 ls s3://kvdest
+```
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+Run the docker application to copy
+
+1. Run the application:
+<br/>
+1.1  use the 3MB as default threshold,copy files from 'kvsource' to 'kvdest'
+   ```sh
+   docker run  -dti -v ~/.aws:/root/.aws  --name awscli myimage
+```
+<br/>
+1.2 use the 1MB as size threshold,copy files from 'frombucket' to ' tobucket'
+```sh
+#docker run  -dti -v ~/.aws:/root/.aws  --name awscli myimage  frombucket tobucket 1
+```
 
 
 
