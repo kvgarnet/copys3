@@ -63,8 +63,9 @@ The application is built with AWS python SDK boto3 module, interacting with AWS 
 After above prerequisites tools installed on Linux Servers, please configure docker images as below:
  
 1. Create IAM user with AWSS3fullaccess permission. remember the AK/SK credentials
-2. configure AK/SK via running 'aws configure' 
-3. verify that aws-cli tool can work with S3, create S3 buckets as below:
+2. Configure AK/SK via running 'aws configure' 
+3. Verify that aws-cli tool can work with S3, create S3 buckets as below:
+<p>Note:replace bucket names with your own</p>
 ```sh
 aws s3 mb s3://kvsource
 aws s3 mb s3://kvdest
@@ -76,18 +77,18 @@ aws s3 ls
    ```
 5. Build Docker Image
    ```sh
-   docker build -t myimage . 
+   make build 
    ```
-6. upload files with different sizes to source bucket via aws cli
-</p>
+6. Generate files with different sizes to source bucket via aws cli
 ```
-aws s3 cp 1m s3://kvsource/
-aws s3 cp 1.5m s3://kvsource/
-aws s3 cp 2m s3://kvsource/
-aws s3 cp 3m s3://kvsource/
-aws s3 cp 4m s3://kvsource/
+make 
 ```
-
+7. Upload files with different sizes to source bucket via aws cli
+```
+make upload 
+#by default it will use my account's source bucket 'kvsource', can also set your bucket name with:
+make upload  source=<your_bucket>
+```
 
 ## Usage
 ### Test apllication locally
@@ -108,12 +109,12 @@ copys3.py kvsource kvdest 3
 <br/>
 1.1  use the 3MB as default threshold,copy files from 'kvsource' to 'kvdest'
    ```sh
-   docker run  -dti -v ~/.aws:/root/.aws  --name awscli myimage
+  make run
 ```
 <br/>
 1.2 use the 1MB as size threshold,copy files from 'frombucket' to ' tobucket'
 ```sh
-#docker run  -dti -v ~/.aws:/root/.aws  --name awscli myimage  frombucket tobucket 1
+make run source=kvsource dest=kvdest size=1
 ```
 
 
