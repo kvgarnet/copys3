@@ -101,11 +101,11 @@ copys3.py kvsource kvdest 3
 ### Run the docker application
 
 1. Run the application:
-    - use the 3MB as default threshold,copy files from 'kvsource' to 'kvdest'
+- use the 3MB as default threshold,copy files from 'kvsource' to 'kvdest'
 ```sh
   make run
 ```
-    - customize the bucket and size, for example, use the 1MB as size threshold,copy files from 'frombucket' to 'tobucket'
+- customize the bucket and size, for example, use the 1MB as size threshold,copy files from 'frombucket' to 'tobucket'
 ```sh
 make run source=frombucket dest=tobucket size=1
 ```
