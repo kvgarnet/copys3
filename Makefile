@@ -25,6 +25,7 @@ run:
 	docker run  -dti -v ~/.aws:/root/.aws  --name awscli myimage $(source) $(dest) $(size)
 clean:
 	docker rm -f awscli >/dev/null 2>&1 && echo "Container app deleted."
+	docker rmi myimage >/dev/null 2>&1 || echo "image deleted"
 	rm -f 1m 1.5m 2m sourcebucket destbucket&& echo "all file cleaned" 
 	aws s3 rb --force s3://$(source)
 	aws s3 rb --force s3://$(dest)
