@@ -68,7 +68,7 @@ After above prerequisites tools installed on Linux Servers, please configure doc
 2. create S3 buckets
 ```
 make mb
-#Note:replace bucket names with your own
+#Note:#by default it will create buckets 'kvsource' 'kvdest', can also set your bucket name with
 make mb source=<your_bucket1> dest=<your_bucket2>
 ```
 2. Generate files with different sizes to source bucket
@@ -108,10 +108,8 @@ copys3.py kvsource kvdest 3
 ```sh
   make run
 ```
-
-    - customize the bucket and size
-
-    for example, use the 1MB as size threshold,copy files from 'frombucket' to 'tobucket'
+   - customize the bucket and size
+for example, use the 1MB as size threshold,copy files from 'frombucket' to 'tobucket'
 ```sh
 make run source=frombucket dest=tobucket size=1
 ```
