@@ -51,9 +51,7 @@ The application is built with AWS python SDK boto3 module, interacting with AWS 
   - [AWS SDK Python boto3](https://aws.amazon.com/sdk-for-python/) - ensure boto3 installed on host server
 - Create IAM user with AWSS3fullaccess permission. record user's AK/SK credentials
 - Configure AK/SK via 'aws configure' on host server
-- Verify that user has permission  with S3, create S3 buckets via aws cli 
-
-    **Note:replace bucket names with your own**
+- Verify that user has permission  with S3
 ```
 aws s3 ls
 ```
