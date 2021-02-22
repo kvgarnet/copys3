@@ -1,6 +1,29 @@
+#vars
 source ?= kvsource
 dest ?= kvdest
 size ?= 1.5
+#Dockerfile var
+py_ver=3.6
+.PHONY: help mb s3files upload build run all
+help:
+	@echo 'Usage: make [TARGET] [ARGUMENTS]'
+	@echo ""
+	@echo "Makefile arguments:"
+	@echo ""
+	@echo "source  - source bucket name"
+	@echo "dest    - destination bucket name"
+	@echo "size    - threshold size in MB"
+	@echo "py_ver  - Python image Version"
+	@echo ""
+	@echo "Makefile Targets:"
+	@echo ""
+	@echo "mb      - create S3 buckets"
+	@echo "s3files - create S3 testfiles"
+	@echo "upload  - upload S3 testfiles to sourcebucket"
+	@echo "build   - build docker image"
+	@echo "run     - run docker app"
+	@echo "all     - run above targets in one shot"
+all: mb s3files upload build run
 mb: sourcebucket destbucket
 	echo "buckets created"
 sourcebucket:
@@ -20,7 +43,7 @@ s3files: 1m 1.6m 2m
 upload:
 	for file in ./*m; do  aws s3 cp $$file s3://$(source) ; done
 build:
-	docker build -t myimage .
+	docker build  --build-arg PYTHON_VER=${py_ver} -t myimage .
 run:
 	docker run  -dti -v ~/.aws:/root/.aws  --name awscli myimage $(source) $(dest) $(size)
 clean:

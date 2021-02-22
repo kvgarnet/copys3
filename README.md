@@ -60,27 +60,28 @@ aws s3 ls
 After above prerequisites tools installed on Linux Servers, please configure as below:
 
 1. Clone the repo
-   ```sh
+```sh
    git clone https://github.com/kvgarnet/copys3.git
-   ```
+```
+**Note: you can run below targets step by step or run 'make all' to run all targets in one command.**
 2. create S3 buckets (optional if you already created S3 buckets)
 ```
 make mb
 #Note:by default it will create buckets 'kvsource' 'kvdest', can also set your bucket name with
 make mb source=<your_bucket1> dest=<your_bucket2>
 ```
-2. Generate files with different sizes to source bucket(optional if you already have S3 files)
+3. Generate files with different sizes to source bucket(optional if you already have S3 files)
 ```
 #we will generate 1mb 1.5mb 2mb files for testing
 make s3files
 ```
-3. Upload test files with different sizes to source bucket via aws cli (optional if you already have S3 files)
+4. Upload test files with different sizes to source bucket via aws cli (optional if you already have S3 files)
 ```
 make upload 
 #by default it will upload to bucket 'kvsource', can also set your bucket name with:
 make upload  source=<your_bucket>
 ```
-4. Build Docker Image
+5. Build Docker Image
    ```sh
    make build 
    ```
@@ -108,6 +109,10 @@ python3 copys3.py kvsource kvdest 3
 - customize the bucket and size, for example, use the 1MB as size threshold,copy files from 'frombucket' to 'tobucket'
 ```sh
 make run source=frombucket dest=tobucket size=1
+```
+2. If you'd like run all above targets in one command 
+```
+make all
 ```
 
 
