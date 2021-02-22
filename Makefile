@@ -1,6 +1,6 @@
 source ?= kvsource
 dest ?= kvdest
-size ?= 3
+size ?= 1.5
 mb: sourcebucket destbucket
 	echo "buckets created"
 sourcebucket:
@@ -9,12 +9,12 @@ sourcebucket:
 destbucket:
 	aws s3 mb s3://$(dest)
 	touch destbucket
-s3files: 1m 1.5m 2m
+s3files: 1m 1.6m 2m
 	echo "S3 files created"
 1m:
 	dd if=/dev/zero of=./1m bs=1k count=1024
-1.5m:
-	dd if=/dev/zero of=./1.5m bs=1k count=1600
+1.6m:
+	dd if=/dev/zero of=./1.6m bs=1k count=1600
 2m:
 	dd if=/dev/zero of=./2m bs=1M count=2
 upload:
@@ -26,7 +26,7 @@ run:
 clean:
 	docker rm -f awscli >/dev/null 2>&1 && echo "Container app deleted."
 	docker rmi myimage >/dev/null 2>&1 || echo "image deleted"
-	rm -f 1m 1.5m 2m sourcebucket destbucket&& echo "all file cleaned" 
+	rm -f 1m 1.6m 2m sourcebucket destbucket&& echo "all file cleaned" 
 	aws s3 rb --force s3://$(source)
 	aws s3 rb --force s3://$(dest)
 	echo "S3 buckets removed"

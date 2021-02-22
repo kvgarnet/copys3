@@ -8,7 +8,7 @@ def getParser():
     parser=argparse.ArgumentParser(description=desc, usage=usage)
     parser.add_argument('source',type=str, metavar="sourcebkt",help='name of source bucket')
     parser.add_argument('dest',type=str, metavar="destbkt",help='name of dest bucket')
-    parser.add_argument('size',type=int, metavar="size",help='size of S3 object in unit mb')
+    parser.add_argument('size',type=float, metavar="size",help='size of S3 object in unit mb')
     #parse the args
     args = parser.parse_args()
     return args
