@@ -66,15 +66,15 @@ After above prerequisites tools installed on Linux Servers, please configure as 
 2. create S3 buckets (optional if you already created S3 buckets)
 ```
 make mb
-#Note:#by default it will create buckets 'kvsource' 'kvdest', can also set your bucket name with
+#Note:by default it will create buckets 'kvsource' 'kvdest', can also set your bucket name with
 make mb source=<your_bucket1> dest=<your_bucket2>
 ```
-2. Generate files with different sizes to source bucket(optional if you already S3 files)
+2. Generate files with different sizes to source bucket(optional if you already have S3 files)
 ```
 #we will generate 1mb 1.5mb 2mb files for testing
 make s3files
 ```
-3. Upload test files with different sizes to source bucket via aws cli (optional if you already S3 files)
+3. Upload test files with different sizes to source bucket via aws cli (optional if you already have S3 files)
 ```
 make upload 
 #by default it will upload to bucket 'kvsource', can also set your bucket name with:
@@ -86,12 +86,12 @@ make upload  source=<your_bucket>
    ```
 
 ## Usage
-### Test apllication locally
+### Run  apllication locally
 1. Before running the docker container, you can also run python application locally
 ```
 copys3.py <sourcebucket> <destinationbucket> <threshold>
 # in my AWS test account, example as
-copys3.py kvsource kvdest 3
+python3 copys3.py kvsource kvdest 3
 ```
 2. Verify to see files were copied to kvdest bucket:
 ```sh
@@ -124,4 +124,7 @@ make run source=frombucket dest=tobucket size=1
 ```
 
 2. You can also manually run the python code as step 1 in Usage Section
+```
+python3 copys3.py kvsource kvdest 3
+```
 
