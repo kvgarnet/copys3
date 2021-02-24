@@ -64,6 +64,7 @@ After above prerequisites tools installed on Linux Servers, please configure as 
    git clone https://github.com/kvgarnet/copys3.git
 ```
 **Note: you can run below targets step by step or run 'make all' to run all targets in one command.**
+
 2. create S3 buckets (optional if you already created S3 buckets)
 ```
 make mb
@@ -96,7 +97,7 @@ python3 copys3.py kvsource kvdest 3
 ```
 2. Verify to see files were copied to kvdest bucket:
 ```sh
- aws s3 ls s3://kvdest
+make test
 ```
 
 ### Run the docker application

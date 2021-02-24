@@ -22,8 +22,9 @@ help:
 	@echo "upload  - upload S3 testfiles to sourcebucket"
 	@echo "build   - build docker image"
 	@echo "run     - run docker app"
+	@echo "test    - list S3 bucket if matched files copied from source bucket"
 	@echo "all     - run above targets in one shot"
-all: mb s3files upload build run
+all: mb s3files upload build run test
 mb: sourcebucket destbucket
 	echo "buckets created"
 sourcebucket:
@@ -46,6 +47,12 @@ build:
 	docker build  --build-arg PYTHON_VER=${py_ver} -t myimage .
 run:
 	docker run  -dti -v ~/.aws:/root/.aws  --name awscli myimage $(source) $(dest) $(size)
+test:
+	@echo ""
+	@echo "check the files in $(dest) bucket:"
+	@echo ""
+	@sleep 3
+	@aws s3 ls s3://$(dest)
 clean:
 	docker rm -f awscli >/dev/null 2>&1 && echo "Container app deleted."
 	docker rmi myimage >/dev/null 2>&1 || echo "image deleted"
