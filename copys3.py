@@ -20,15 +20,19 @@ def copy_to_bucket(sourcebucket,destbucket,filename):
         }
     obj=destbucket.Object(filename)
     obj.copy(copy_source)
-def main():
-    args=getParser()
-    sourcebucket=args.source
-    destbucket=args.dest
-    #transform to mb from bytes
-    sizemb=args.size*1024*1024
-    # copyobj_lst=[]
+
+def listobject(bucket):
     s3_resource = boto3.resource('s3')
-    # source_bucket = s3_resource.Bucket(name='kvsource')
+    bucketname = s3_resource.Bucket(name=bucket)
+    print(f"List objects in bucket {bucketname}:")
+    objlst=[]
+    for object in bucketname.objects.all():
+        print(object.key)
+        objlst.append(object.key)
+    return objlst
+
+def checkobject(sourcebucket,destbucket,sizemb):
+    s3_resource = boto3.resource('s3')
     source_bucket = s3_resource.Bucket(name=sourcebucket)
     destbucket=s3_resource.Bucket(destbucket)
     for object in source_bucket.objects.all():
@@ -37,6 +41,14 @@ def main():
             print(f"object {object.key} is larger than {sizemb} bytes")
             print(f"copying object {object.key} to bucket {destbucket.name}")
             copy_to_bucket(sourcebucket,destbucket,object.key)
-    # print(f"copy object list :{copyobj_lst}")
+
+def main():
+    args=getParser()
+    sourcebucket=args.source
+    destbucket=args.dest
+    #transform to mb from bytes
+    sizemb=args.size*1024*1024
+    checkobject(sourcebucket,destbucket,sizemb)
+
 if __name__=='__main__':
     main()
