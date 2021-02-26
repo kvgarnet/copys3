@@ -5,14 +5,24 @@
 {% endfor %}
 -->
 <form action="your-url" method="post">
-  <label for="sourcebucket">Source Bucket Name    </label>
-  <input type="text" name="sourcebucket" value="" required>
+  <table>
+    <tr>
+      <td align="right"><label for="sourcebucket">Source Bucket Name    </label></td>
+      <td align="left"><input type="text" name="sourcebucket" value="kvsource"  required> <td align="right"><button type="submit" formaction=listsrcbucket> ListSourceBucket</button></td> </td>
+    </tr>
   <br>
-  <label for="destbucket">Destination Bucket Name</label>
-  <input type="text" name="destbucket" value="" required>
+    <tr>
+      <td align="right"><label for="destbucket">Destination Bucket Name</label></td>
+      <td align="left"><input type="text" name="destbucket" value="kvdest"  required> <td align="right"><button type="submit" formaction=listdestbucket> ListDestBucket</button></td></td>
+    </tr>
   <br>
-  <label for="sizemb">Threshold size(MB)</label>
-  <input type="text" name="sizemb" value="" required>
+    <tr>
+  <td align="right"><label for="sizemb">Threshold size(MB)</label></td>
+    <td align="left"><input type="text" name="sizemb" value="1" required></td>
+    </tr>
   <br>
-  <input type="submit" value="Copy">
+    <tr>
+      <td align="right"><input type="submit" value="Copy"></td>
+    </tr>
+  </table>
 </form>

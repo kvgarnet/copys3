@@ -16,6 +16,14 @@ def listsrcbucket():
         objlist=copys3.listobject(sourcebucket)
         return render_template('listsrc.html',objectlist=objlist,bucketname=sourcebucket)
     return render_template('listsrc.html')
+
+@app.route('/listdestbucket', methods=['GET','POST'])
+def listdestbucket():
+    if request.method == 'POST':
+        destbucket=request.form['destbucket']
+        objlist=copys3.listobject(destbucket)
+        return render_template('listdest.html',objectlist=objlist,bucketname=destbucket)
+    return render_template('listdest.html')
 @app.route('/your-url', methods=['GET','POST'])
 def your_url():
     if request.method == 'POST':
